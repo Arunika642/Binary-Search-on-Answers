@@ -1,0 +1,35 @@
+import java.util.*;
+public class Solution {
+
+    static int reqTime(int []v, int hourly,int n,int h)
+    {
+        int totalHours=0;
+        for(int i=0;i<n;i++)
+        {
+            totalHours += (int)Math.ceil((double)v[i] / hourly);
+            if(totalHours>h) return 2;
+        }
+        return 1;
+    }
+    public static int minimumRateToEatBananas(int []v, int h) {
+        // Write Your Code Here
+
+        int n=v.length,ans=0;
+        int low=1, high = Arrays.stream(v).max().getAsInt(); // Max value in the array
+        while(low<=high)
+        {
+            int mid=low+(high-low)/2;
+            int time=reqTime(v,mid,n,h);
+            if(time==2) low=mid+1;
+            else
+            {
+                ans=mid;
+                high=mid-1;
+            } 
+        }
+        return ans;
+    }
+}
+
+
+
