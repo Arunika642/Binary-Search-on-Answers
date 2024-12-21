@@ -1,0 +1,26 @@
+class Solution {
+
+    boolean sumPossible(int[] nums, int divisor,int threshold)
+    {
+        int s=0;
+        for(int i=0;i<nums.length;i++)
+        {
+            s+= Math.ceil((double)nums[i]/(double)divisor);
+        }
+        if(s<=threshold) return true;
+        return false;
+    }
+    public int smallestDivisor(int[] nums, int threshold) {
+        
+        int low=1,high=Arrays.stream(nums).max().getAsInt();
+        while(low<=high)
+        {
+            int mid=low+(high-low)/2;
+
+            boolean res=sumPossible(nums,mid,threshold);
+            if(res == true) high=mid-1;
+            else low=mid+1;
+        }
+        return low;
+    }
+}
