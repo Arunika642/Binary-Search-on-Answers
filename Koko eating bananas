@@ -6,7 +6,7 @@ public class Solution {
         int totalHours=0;
         for(int i=0;i<n;i++)
         {
-            totalHours += (int)Math.ceil((double)v[i] / hourly);
+            totalHours += Math.ceil((double)v[i] /(double) hourly);
             if(totalHours>h) return 2;
         }
         return 1;
