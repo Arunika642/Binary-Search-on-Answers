@@ -1,0 +1,38 @@
+import java.util.*;
+
+public class Solution {
+    public static int findLargestMinDistance(ArrayList<Integer> boards, int k) {
+                int ans=-1;
+        int low = Collections.max(boards);
+       
+        int high = boards.stream().mapToInt(Integer::intValue).sum();
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            int noOfPainters = func(boards, mid);
+    
+
+            if (noOfPainters <= k) { 
+                ans=mid;
+                high = mid - 1;
+            } else { 
+                low = mid + 1;
+            }
+        }
+        return ans;
+    }
+
+    static int func(ArrayList<Integer> boards, int n) {
+        int painters = 1, unitHolds = 0;
+
+        for (int i = 0; i < boards.size(); i++) {
+            if (boards.get(i) + unitHolds <= n) {
+                unitHolds += boards.get(i);
+            } else { 
+                painters++;
+                unitHolds = boards.get(i);
+            }
+        }
+
+        return painters;
+    }
+}
