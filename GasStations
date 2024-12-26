@@ -1,0 +1,38 @@
+import java.util.*;
+
+public class Solution {
+    public static class Pair {
+        double first;
+        int second;
+
+        Pair(double first, int second) {
+            this.first = first;
+            this.second = second;
+        }
+    }
+
+    public static double MinimiseMaxDistance(int[] arr, int K) {
+        int n = arr.length;
+        int[] howMany = new int[n - 1];
+
+        // Customized max-heap priority queue with explicit type for comparator
+        PriorityQueue<Pair> pq = new PriorityQueue<>((Pair a, Pair b) -> Double.compare(b.first, a.first));
+
+        // Inserting initial lengths
+        for (int i = 0; i < n - 1; i++) {
+            pq.add(new Pair(arr[i + 1] - arr[i], i)); // Adding initial differences with index
+        }
+
+        // Adding gas stations
+        for (int gasStations = 1; gasStations <= K; gasStations++) {
+            Pair tp = pq.poll(); // Finds the max and removes it
+            int maxIndex = tp.second; // Maximum index will be equal to second of tp
+
+            howMany[maxIndex]++; // Increase at that index
+            double iniDiff = arr[maxIndex + 1] - arr[maxIndex];
+            double sectionLength = iniDiff / (double) (howMany[maxIndex] + 1); // Correct calculation
+            pq.add(new Pair(sectionLength, maxIndex)); // Add new pair to the queue
+        }
+        return pq.peek().first; // Return the minimized max distance
+    }
+}
