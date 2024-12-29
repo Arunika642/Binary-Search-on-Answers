@@ -1,4 +1,4 @@
-import java.util.*;
+#import java.util.*;
 public class Solution {
     public static int aggressiveCows(int []stalls, int k) {
         //    Write your code here.
